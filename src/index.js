@@ -8,7 +8,7 @@ class ServerlessOfflineDotEnv {
   constructor(serverless, options) {
 
     this.serverless = serverless;
-    this.path = options['dotenv-path'] || path.resolve(process.cwd(), '.env');
+    this.path = options['dotenv-path'] || this.serverless.service.custom['grvsls-offline-dotenv'] || path.resolve(process.cwd(), '.env');
     this.encoding = options['dotenv-encoding'] || 'utf-8';
 
     this.hooks = {
@@ -20,7 +20,7 @@ class ServerlessOfflineDotEnv {
 
   run() {
 
-    this.serverless.cli.log('DEPRECATION NOTICE: serverless-offline-dotenv is deprecated in favor of built-in dot-env support introduced in Serverless v3. Please raise an issue if you want support for this plugin to continue (with reasons why).');
+    this.serverless.cli.log(`Loading custom environemnt variables from ${this.path}`);
 
     this.serverless.service = this.serverless.service || {};
     this.serverless.service.provider = this.serverless.service.provider || {};
